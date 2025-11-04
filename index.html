@@ -2,21 +2,32 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>Открытие V2RayTun...</title>
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const key = params.get("key");
-    if (key) {
-      window.location.href = "v2raytun://import/" + key;
-      setTimeout(() => {
-        document.body.innerHTML = `<h2>Если приложение не открылось, нажмите <a href="v2raytun://import/${key}">сюда</a></h2>`;
-      }, 2000);
-    } else {
-      document.body.innerHTML = "<h2>Ошибка: параметр 'key' не передан.</h2>";
-    }
-  </script>
+  <title>Открытие V2RayTun / Happ...</title>
 </head>
 <body>
-  <h2>Открытие V2RayTun...</h2>
+  <h2>Открытие приложения...</h2>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Получаем ключ из параметра GET
+      const params = new URLSearchParams(window.location.search);
+      const key = params.get("key");
+
+      if (key) {
+        // Пробуем открыть приложение через пользовательский протокол
+        window.location.href = key;
+
+        // Если приложение не открылось, показываем ссылку для ручного открытия
+        setTimeout(() => {
+          document.body.innerHTML = `
+            <h2>Если приложение не открылось автоматически, нажмите ссылку ниже:</h2>
+            <a href="${key}">${key}</a>
+          `;
+        }, 2000);
+      } else {
+        document.body.innerHTML = "<h2>Ошибка: параметр 'key' не передан.</h2>";
+      }
+    });
+  </script>
 </body>
 </html>
